@@ -1,0 +1,19 @@
+# depslib dependency file v1.0
+1510407856 source:c:\users\alunotgn\desktop\campominado\campo.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	"campo.h"
+
+1510404915 c:\users\alunotgn\desktop\campominado\campo.h
+	<stdio.h>
+	<stdlib.h>
+
+1510405316 source:c:\users\alunotgn\desktop\campominado\main.c
+	<stdio.h>
+	<stdlib.h>
+
+1510405318 source:c:\users\davi-\documents\trabalhos\sistemas operacionais\campominado\main.c
+	<stdio.h>
+	<stdlib.h>
+
