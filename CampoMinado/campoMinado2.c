@@ -62,3 +62,54 @@ for(i=0;i<9;i++){
   }
 }
 }
+
+void jogada(void){
+    int i, j, auxi, auxj, escolhido;
+  while(1){
+    printf("\nEscolha a posicao que deseja abrir:  ");
+    scanf("%d", &escolhido);
+
+    for(i=0; i<10; i++)
+    {
+        for(j=0; j<10; j++)
+        {
+            if(campo[i][j] = escolhido)
+            {
+                auxi = i;  //AQUI ESTAMOS ARMAZENANDO A POSIÇÃO SELECIONADA
+                auxj = j;
+            }
+        }
+    }
+
+    if(op[auxi][auxj] == -1)
+    {//perdeu
+      system("clear");
+      printf("\nQue pena, você perdeu!\n");
+      for(i=0; i<10; i++)
+      {
+          for(j=0; j<10; j++)
+          {
+              if(campo[i][j] = -1)//revela as bombas
+              {
+                if(z<10)
+                    printf("|  %c ", 207 );
+                else
+                    printf("| %c ", 207 );
+              }
+              else{//mantem onde n era bomba
+                if(z<10)
+                    printf("|  %d ", campo[i][j]);
+                else
+                    printf("| %d ", campo[i][j]);
+              }
+          }
+      }
+    }//perdeu
+
+    else
+    {//caso não seja bomba, verifica na op a dica
+
+    }
+
+  }//while
+}
