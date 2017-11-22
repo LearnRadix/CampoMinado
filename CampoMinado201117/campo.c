@@ -13,31 +13,36 @@ void libera_vazio(int auxi, int auxj) //FUNÇÃO DE LOOP QUE VAI LIBERANDO OS ES
     int i, j;
     bool continua;
 
-        do
+    do
+    {
+        for(i = auxi-1; i <= auxi +1; i++)
         {
-            for(i = auxi-1; i <= auxi +1; i++)
+            if(i < 0 || i > 9)
             {
-                if(i < 0 || i > 9)
+                continue;
+            }
+            for (j = auxj-1; j <= auxj +1; j++)
+            {
+                if(j < 0 || j > 9)
                 {
                     continue;
                 }
-                for (j = auxj-1; j <= auxj +1; j++)
-                {
-                    if(j < 0 || j > 9)
-                    {
-                        continue;
-                    }
                 continua = false;
                 if(op[i][j] == 0)
                 {
-                continua = true;
-                campo[i][j] = 0;
-                libera_vazio(i, j);
+                    continua = true;
+                    campo[i][j] = 0;
+                    libera_vazio(i, j);
+
                 }
+                else if(op[i][j] > 0)
+                {
+                    campo[i][j] = op[i][j];
                 }
             }
         }
-        while(continua);
+    }
+    while(continua);
 }
 
 
@@ -66,8 +71,9 @@ void gera_dicas(void)
                 aux++;
 
             countbombas[k]=aux;
-            if(op[i][j] != -1){
-              op[i][j] =  countbombas[k];
+            if(op[i][j] != -1)
+            {
+                op[i][j] =  countbombas[k];
             }
             aux=0;
             k++;
@@ -186,14 +192,14 @@ void verifica_vizinhanca() //FUN��O PRA VERIFICAR A VIZINHAN�A
 
         if(!verificaBomba(auxi, auxj, escolhido))
         {
-         if(op[i][j] == 0)
-         {
-             libera_vazio(auxi, auxj);
-         }
-         else if(op[i][j] > 0)
-         {
-             campo[i][j] = op[i][j];
-         }
+            if(op[i][j] == 0)
+            {
+                libera_vazio(auxi, auxj);
+            }
+            else if(op[i][j] > 0)
+            {
+                campo[i][j] = op[i][j];
+            }
 
 
         }
