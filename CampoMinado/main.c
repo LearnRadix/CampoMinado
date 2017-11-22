@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int campo[10][10];
 
 int main()
     {
@@ -9,8 +8,10 @@ int main()
         printf("########## BOAS VINDAS AO CAMPO MINADO ##########\n");
 
     imprime_inicio();
+    gera_bombas();
+    gera_dicas();
+    atualiza_op();
 
 
     return 1;
 }
-
