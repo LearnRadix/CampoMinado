@@ -4,7 +4,7 @@
 #include"campo.h"
 #define tam 25
 
-int campo[10][10], op[10][10];
+int campo[10][10], op[10][10], countbombas[100];
 pthread_mutex_t mutex_bomba[25];
 pthread_t gerando[25];
 
@@ -21,7 +21,7 @@ int verificaBomba(int linha, int coluna, int comparado)
     return 0;
 }
 
-void imprime_inicio() //ESSA FUNÇÃO SERVE PRA IMPRIMIR O ESTADO INICIAL DO CAMPO MINADO
+void imprime_inicio() //ESSA FUNï¿½ï¿½O SERVE PRA IMPRIMIR O ESTADO INICIAL DO CAMPO MINADO
 {
     int i, j, z=0;
     system("clear");
@@ -42,24 +42,24 @@ void imprime_inicio() //ESSA FUNÇÃO SERVE PRA IMPRIMIR O ESTADO INICIAL DO CAMPO
     }
 
 }
-//FUNÇÕES PARA GERAR AS BOMBAS PARALELAMENTE UTILIZANDO THREADS
-void gerando(int * bomba)//AQUI É BLOQUEADO O ACESSO QUE ESTÁ SENDO UTILIZADO
+//FUNï¿½ï¿½ES PARA GERAR AS BOMBAS PARALELAMENTE UTILIZANDO THREADS
+void gerando(int * bomba)//AQUI ï¿½ BLOQUEADO O ACESSO QUE ESTï¿½ SENDO UTILIZADO
 {
     pthread_mutex_lock(&(mutex_bomba[*bomba]));
 }
 
-void acabou_gerar(int * bomba)//AQUI É LIBERADO O ACESSO APÓS O USO
+void acabou_gerar(int * bomba)//AQUI ï¿½ LIBERADO O ACESSO APï¿½S O USO
 {
     pthread_mutex_unlock(&(mutex_bomba[*bomba]));
 }
 
-void * gera_bombas(void *var)//FUNÇÃO PARA GERAR AS BOMBAS
+void * gera_bombas(void *var)//FUNï¿½ï¿½O PARA GERAR AS BOMBAS
 {
     int * bomba = (int *) (var);
     srand(time(NULL));
     int tempo = rand() % 10;
     int aux,contador;
-    sleep(tempo);//É DEFINIDO UM TEMPO ALEATÓRIO PARA AS THREADS NÃO ACESSAREM AO MESMO TEMPO
+    sleep(tempo);//ï¿½ DEFINIDO UM TEMPO ALEATï¿½RIO PARA AS THREADS Nï¿½O ACESSAREM AO MESMO TEMPO
     gerando(bomba);//BLOQUEIA O ACESSO
 
     do
@@ -68,35 +68,15 @@ void * gera_bombas(void *var)//FUNÇÃO PARA GERAR AS BOMBAS
     int coluna = rand() % 10;
     }while(verificaBomba(linha, coluna, op[linha][coluna]));
 
-    op[linha][coluna] = -1; //-1 É O VALOR ATRIBUIDO ÀS BOMBAS
+    op[linha][coluna] = -1; //-1 ï¿½ O VALOR ATRIBUIDO ï¿½S BOMBAS
 
-    acabou_gerar(bomba);//LIBERA O ACESSO A FUNÇÃO
+    acabou_gerar(bomba);//LIBERA O ACESSO A FUNï¿½ï¿½O
     pthread_exit(NULL);
 }
 
-void atualiza_matriz()  //ESSA FUNÇÃO SERVE PRA ATUALIZAR A MATRIZ DEPOIS DE VERIFICAR A VIZINHANÇA
+void verifica_vizinhanca() //FUNï¿½ï¿½O PRA VERIFICAR A VIZINHANï¿½A
 {
-    int i, j;
-    system("clear");
-    for(i=0; i<10; i++)
-    {
-        for(j=0; j<10; j++)
-        {
-            if(i=0)
-            {
-                printf("|  %d ", campo[i][j]);
-            }
-            else
-                printf("| %d ", campo[i][j]);
-        }
-        printf("\n");
-    }
-
-}
-
-void verifica_vizinhanca() //FUNÇÃO PRA VERIFICAR A VIZINHANÇA
-{
-    int i, j, z, auxi, auxj, countbomba[100], k=0, escolhido;//O COUNT BOMBA É UM VETOR PARA CADA POSIÇÃO QUE FOR CONTER UM NUMERO QUE REPRESENTA BOMBAS PROXIMAS
+    int i, j, z, auxi, auxj, countbomba[100], k=0, escolhido;//O COUNT BOMBA ï¿½ UM VETOR PARA CADA POSIï¿½ï¿½O QUE FOR CONTER UM NUMERO QUE REPRESENTA BOMBAS PROXIMAS
 
     while(1)
     {
@@ -110,7 +90,7 @@ void verifica_vizinhanca() //FUNÇÃO PRA VERIFICAR A VIZINHANÇA
             {
                 if(campo[i][j] = escolhido)
                 {
-                    auxi = i;  //AQUI ESTAMOS ARMAZENANDO A POSIÇÃO SELECIONADA
+                    auxi = i;  //AQUI ESTAMOS ARMAZENANDO A POSIï¿½ï¿½O SELECIONADA
                     auxj = j;
                 }
 
@@ -118,7 +98,7 @@ void verifica_vizinhanca() //FUNÇÃO PRA VERIFICAR A VIZINHANÇA
 
         }
 
-        if(verificaBomba(auxi, auxj, escolhido)) //ESSA PARTE ANALISA SE O USARIO ACERTOU A BOMBA, E LOGO EM SEGUIDA MOSTRA TODAS AS POSIÇÕES DAS OUTRAS BOMBAS
+        if(verificaBomba(auxi, auxj, escolhido)) //ESSA PARTE ANALISA SE O USARIO ACERTOU A BOMBA, E LOGO EM SEGUIDA MOSTRA TODAS AS POSIï¿½ï¿½ES DAS OUTRAS BOMBAS
         {
             for(i=0; i<10; i++)
             {
@@ -126,45 +106,28 @@ void verifica_vizinhanca() //FUNÇÃO PRA VERIFICAR A VIZINHANÇA
                 {
                         if(op[i][j] == -1)
                         {
-                            campo[i][j] = -1;
+                              printf("|  %c ", 32);
+                        }
+                        else{
+                          printf("|  %d ", campo[i][j] );
                         }
 
                 }
 
             }
-            atualiza_matriz();
-            printf("VOCÊ PERDEU!");
+            printf("VOCÃ‰ PERDEU!");
             exit(0);
         }
 
         if(!verificaBomba(auxi, auxj, escolhido))
         {
-
-                for(i = auxi-1; i < auxi +1; i++)
+                for(i = auxi-1; i <= auxi +1 && i <=9 && i>=0 ; i++)
                 {
-                    if(i<0)
+                    for (j = auxj-1; j <= auxj +1 && j<=9 && j>=0 ; j++)
                     {
-                    continue;
-                    }
-
-                    for (j = auxj-1; j < auxj +1; j++)
-                    {
-                        /*if(9<i)
-                         {
-                        break;
-                         }
-                         if(9<j)
-                         {
-                        break;
-                         }*/
-
-                         if(j<0)
-                         {
-                            continue;
-                         }
                         if(verificaBomba(i, j, op[i][j])
                         {
-                            countbomba[k]++; //INCREMENTANDO O TOTAL DE BOMBAS NA DETERMINADA POSIÇÃO DO VETOR
+                            countbomba[k]++; //INCREMENTANDO O TOTAL DE BOMBAS NA DETERMINADA POSIï¿½ï¿½O DO VETOR
                         }
                     }
                 }
@@ -174,5 +137,3 @@ void verifica_vizinhanca() //FUNÇÃO PRA VERIFICAR A VIZINHANÇA
 
     }
 }
-
-

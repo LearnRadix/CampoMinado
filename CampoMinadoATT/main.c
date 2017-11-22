@@ -8,9 +8,6 @@ int main()
         int tam,escolha;
         printf("########## BOAS VINDAS AO CAMPO MINADO ##########\n");
 
-    imprime_inicio();
-
 
     return 1;
 }
-
