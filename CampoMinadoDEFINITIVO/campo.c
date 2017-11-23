@@ -160,6 +160,7 @@ void libera_vazio(int auxi, int auxj)
                 else if(op[i][j] > 0)
                 {
                     campo[i][j] = op[i][j];
+                    op[i][j] = -2; //AQUI TO ATRIBUINDO O QUE ERA ANTES UMA DICA, AGORA É UM ESPAÇO INACESSIVEL
                     espacosfree++;
                 }
             }
