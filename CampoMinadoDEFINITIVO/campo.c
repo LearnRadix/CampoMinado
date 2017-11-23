@@ -220,11 +220,14 @@ void verifica_vizinhanca()
              //CASO SEJA UM ESPAÇO VAZIO, CHAMA A FUNÇÃO LIBERA VAZIO QUE LIBERA TODOS OS ESPAÇOS VAZIOS PRÓXIMOS
             {
                 libera_vazio(auxi, auxj);
+                op[i][j] = -2;    
             }
+            //CASO SEJA UMA DICA, ELE MOSTRA A DICA CORRESPONDENTE
             else if(op[i][j] > 0)
             {
                 campo[i][j] = op[i][j];
                 espacosfree++;
+                op[i][j] = -2;
             }
         }
         //ATUALIZA A MATRIZ INTERFACE COM OS NOVOS VALORES
