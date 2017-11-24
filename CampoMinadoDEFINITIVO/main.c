@@ -271,7 +271,7 @@ void verifica_vizinhanca()
                 }
                 printf("\n");
             }
-            printf("VOCÉ PERDEU!");
+            printf("\n\nVOCÉ PERDEU!\n");
             exit(0);
         }
 
@@ -305,10 +305,10 @@ void atualiza_matriz()
     {
         for(j=0; j<10; j++)
         {
-          if(i<1)
-              printf("\t|%d\t", campo[i][j]);
-          else
-              printf("\t|%d\t", campo[i][j]);
+          if(i<1){
+              printf("\t|%d\t", campo[i][j]);}
+          else{
+              printf("\t|%d\t", campo[i][j]);}
         }
       printf("|");
       printf("\n");
@@ -348,7 +348,7 @@ int main()
 
    sleep(10);
    gera_dicas();
-
+   //teste op
   //  printf("\n");
   //  for(i=0; i<10; i++)
   //  {
