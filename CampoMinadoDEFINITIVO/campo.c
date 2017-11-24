@@ -160,6 +160,7 @@ void libera_vazio(int auxi, int auxj)
                 else if(op[i][j] > 0)
                 {
                     campo[i][j] = op[i][j];
+                    op[i][j] = -2;
                     espacosfree++;
                 }
             }
@@ -190,6 +191,10 @@ void verifica_vizinhanca()
                     auxj = j;
                 }
             }
+        }
+
+        if(verifica_posicao){
+          continue;
         }
 
         if(verificaBomba(auxi, auxj)) //ESSA PARTE ANALISA SE O USARIO ACERTOU A BOMBA, E LOGO EM SEGUIDA MOSTRA TODAS AS POSI��ES DAS OUTRAS BOMBAS
@@ -228,7 +233,7 @@ void verifica_vizinhanca()
         }
         //ATUALIZA A MATRIZ INTERFACE COM OS NOVOS VALORES
         atualiza_matriz();
-    }
+    }//while
     printf("\n\n PARABENS, VOCÊ VENCEU O CAMPO MINADO!");
 }
 
@@ -250,5 +255,13 @@ void atualiza_matriz()
         }
         printf("\n");
     }
+}
 
+int verifica_posicao(int i, int j){
+  if(op[i][j] == -2){// a posição escolhida ja foi aberta
+    return 1;
+  }
+  else{//a posição ainda não foi aberta
+    return 0;
+  }
 }

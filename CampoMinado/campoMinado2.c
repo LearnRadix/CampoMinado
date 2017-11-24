@@ -108,7 +108,14 @@ void jogada(void){
 
     else
     {//caso não seja bomba, verifica na op a dica
+      if(op[i][j]==0){//dica 0, chama a recursiva
 
+
+      }
+      else{//dica não é zero
+        campo[i][j]=op[i][j];
+        op[i][j]=-2;//marca op como ja lida
+      }
     }
 
   }//while
