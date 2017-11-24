@@ -268,8 +268,8 @@ void verifica_vizinhanca()
                     {
                         printf("\t|%d\t", campo[i][j] );
                     }
-                    printf("\n");
                 }
+                printf("\n");
             }
             printf("VOCÉ PERDEU!");
             exit(0);
