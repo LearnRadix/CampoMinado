@@ -160,7 +160,11 @@ void libera_vazio(int auxi, int auxj)
                 else if(op[i][j] > 0)
                 {
                     campo[i][j] = op[i][j];
+<<<<<<< HEAD
                     op[i][j] = -2;
+=======
+                    op[i][j] = -2; //AQUI TO ATRIBUINDO O QUE ERA ANTES UMA DICA, AGORA É UM ESPAÇO INACESSIVEL
+>>>>>>> a182dd9b5d4faee77238036a00d25dfa05e2416c
                     espacosfree++;
                 }
             }
@@ -224,11 +228,14 @@ void verifica_vizinhanca()
              //CASO SEJA UM ESPAÇO VAZIO, CHAMA A FUNÇÃO LIBERA VAZIO QUE LIBERA TODOS OS ESPAÇOS VAZIOS PRÓXIMOS
             {
                 libera_vazio(auxi, auxj);
+                op[i][j] = -2;    
             }
+            //CASO SEJA UMA DICA, ELE MOSTRA A DICA CORRESPONDENTE
             else if(op[i][j] > 0)
             {
                 campo[i][j] = op[i][j];
                 espacosfree++;
+                op[i][j] = -2;
             }
         }
         //ATUALIZA A MATRIZ INTERFACE COM OS NOVOS VALORES
